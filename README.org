@@ -1,0 +1,47 @@
+#+title: General Modularized Simulation Environment
+#+author: Alexander Brown
+#+date: \today
+
+* Introduction
+The General Modularized Simulation Environment (GMSE) is meant to be a general framework for simulation. Conceptually, GMSE is designed to allow modules of varying types (subsystems, plotters, loggers, mock interfaces) to interact. Generally, modules communicate via publishers and subscribers (as is typically the case in robotic code environments). The core source of this project is developed in Python with (most likely) Perl scripts. The Python code is going to be used for the core simulation environment with the Perl scripts being utilized to generate on-the-fly interfacing for the publishers and subscribers for all the modules.
+
+The primary aspect that differs this project from other simulation environments is that the primary objective is to allow the modules to be written in Rust, C/C++, or Python. Rust is desired for the safe code assurances along with the speed that comes along with it; however due to its strict development structure C or C++ may be desired.  Other modules that would not be necessarily part of the core system that is being simulated, such as logging, plotting, or creating an interactive environment within the simulation environment, may be desired to be written in Python.
+
+Each module is to be specified via a YAML file that contains the necessary information to automatically generate the interfaces required to execute the integrated simulation environment. The general YAML API will be the same for all the different types of modules that may be created, but certain types may require additional information.
+
+* Overview
+[[overview][The figure below]] depicts the overall process of GMSE. The order of operations for GMSE is to create the publishers and subscribers for each of the modules and then to begin executing each of the subsystems and mocked applications. The code of the publishers and subscribers are generated on-the-fly by searching the project for all the modules YAML files. The publisher and subscriber interfaces are generated in Python.
+
+#+name: overview
+#+attr_org: :width 1000
+[[./uml/overview.svg]]
+
+* YAML Interface
+YAML files that are going to be used for modules should be prepended with "mod_". In that way, when the program is searching the project for modules to include in the simulation environment it only includes the YAML files of interest. The general YAML interface is shown below in [[yaml-interface]]. Note that items in square brackets indicate lists.
+
+#+name: yaml-interface
+[[./uml/yaml-interface.svg]]
+
+A further description of each component is provided below:
+
+- Name: Identifying name for the module
+- Type: Specify the type of module
+  - Logger: Output data to file or terminal screen
+  - Mock: Simulates the I/O of an external system
+  - Plotter: Display a plot of some sort
+  - Simulation: Something that simulates real-world situations (e.g., wind)
+  - Subsystem: The component that would actually be utilized in the system
+- Refresh: How often is the main loop of the process executed. Note that this is independent of the publisher/subscriber rates
+- Language: How is the modules implemented (Rust, C/C++, Python)
+- Publishers: Data that the module creates
+  - Name: String that gives the name of the published data
+  - Var: List of name and data type pairs
+    - Name: String that gives the variable name
+    - Type: Specify the data type
+    - Example: =["data_name_1", "float"]=
+- Subscribers: List of publisher names that the module is going to subscribe to
+- (Logger) Output: Additional required information for when the type of module is "logger"
+  - Terminal: Boolean to enable/disable output to terminal
+  - File: File path to the log file
+
+* TODO Interfacing with Python, Rust, and C/C++

@@ -1,0 +1,41 @@
+@startuml
+cloud "Public Data"{
+  database Publishers{
+          [Publisher 1] #Green
+          [Publisher 2] #Green
+          [Publisher 3] #Green
+          [Publisher ...] #Green
+  }
+
+  database Subscribers{
+          [Subscriber 1] #Blue
+          [Subscriber 2] #Blue
+          [Subscriber 3] #Blue
+          [Subscriber ...] #Blue
+  }
+}
+
+node Subsystems {
+        [Subsystem 1]
+        [Subsystem 2]
+        [Subsystem 3]
+        [Subsystem ...]
+}
+
+node Mock {
+        [Mock 1]
+        [Mock 2]
+        [Mock 3]
+        [Mock ...]
+}
+
+[GMSE] --> [Publishers] : creates
+[GMSE] --> [Subscribers] : creates
+[GMSE] --> [Subsystems] : executes
+[GMSE] --> [Mock] : executes
+[Mock] --> [Publishers]
+[Mock] --> [Subscribers]
+[Subsystems]  ..> [Publishers]
+[Subscribers] ..> [Subsystems]
+
+@enduml

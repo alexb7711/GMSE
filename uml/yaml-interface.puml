@@ -1,0 +1,19 @@
+@startyaml
+name: string
+type: string
+refresh: float
+language: string
+publishers:
+  name: string
+  vars:
+    - name, data type
+    - name, data type
+    - ...
+subscribers:
+  - name
+  - name
+  - ...
+(logger) output:
+    terminal: boolean
+    file: string
+@endyaml
