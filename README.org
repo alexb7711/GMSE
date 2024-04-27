@@ -45,3 +45,13 @@ A further description of each component is provided below:
   - File: File path to the log file
 
 * TODO Interfacing with Python, Rust, and C/C++
+
+** Rust
+Based on the research conducted, it seems [[https://pyo3.rs/v0.21.1/][PYO3]] the defacto standard for executing Rust code from Python.
+
+TODO: Add example interfacing
+
+** C/C++
+=ctypes= is a good choice for small projects or pure Python programmers who want a simple, easy-to-use solution. =pybind11= is a good choice for large projects or developers who want to expose their C++ code to Python and take advantage of its performance and features. Ultimately, the choice between ctypes and pybind11 depends on your specific project requirements and your team’s expertise.
+
+TODO: Add example interfacing
