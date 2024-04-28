@@ -1,0 +1,20 @@
+# https://setuptools.pypa.io/en/latest/userguide/quickstart.html#setup-py
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+
+[build-system]
+requires = [
+    "setuptools>=60",
+    "setuptools-scm>=8.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "GMSE"
+authors = [{name = "Alexander Brown", email = "alex.brown7711@gmail.com"}]
+readme = "README.md"
+dynamic = ["version"]
+requires-python = ">= 3.8"
+license = {file = "LICENSE"}
+description = "General Modularized Simulation Environment"
+dependencies = ["pyyaml"]
+
+[tool.setuptools_scm]

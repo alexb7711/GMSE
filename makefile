@@ -44,21 +44,16 @@ test: ## Run unit tests
 
 ##==============================================================================
 #
+.ONESHELL:
 setup: ## Set up the project
-	@# Set up virtual environemnt
 	@$(PYTHON) -m venv $(ENV_DIR)
-	@$(BIN)/pip install --upgrade pip
-	@# Create output directories
-	@mkdir -p $(DATA)
-	@mkdir -p $(IMG_D)
-	@# Intall packages into virtual environemnt
-	@$(BIN)/pip install -r $(DEP)
+	@ $(BIN)/pip install .
 
 ##==============================================================================
 #
 update: ## Update the virtual environment packages
 	@$(BIN)/pip install --upgrade pip
-	@$(BIN)/pip install -r $(DEP)
+	@$(BIN)/pip install .
 
 ##==============================================================================
 #
@@ -71,12 +66,8 @@ run: ## Execute the program
 
 ##==============================================================================
 #
-uml: $(UML) ## Converts the UML files in $(UML_D) into SVG files
-
-##==============================================================================
-#
-debug: ## Enable the debugger
-	@echo Not implemented...
+doc: $(UML) ## Converts the UML files in $(UML_D) into SVG files
+	@emacs README.org -Q --batch -e "org-md-export-to-markdown"
 
 ##==============================================================================
 #
